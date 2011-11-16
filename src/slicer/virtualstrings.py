@@ -1,11 +1,6 @@
 #!/usr/bin/env python
 
-from scanner import Scanner
 import numpy as np
-from util.gaussian import onedgaussian_trigger
-import util.frame_convert
-
-import cv
 
 GRIDX = 4
 GRIDY = 3
@@ -29,9 +24,9 @@ class Horizontal_slices(object):
     def get_typical_config(self):
         return HORIZONTAL_SLICES_CONFIG
 
-    def local_to_pixelcentre(self, labels):
-        x, y = labels
-        return (int((self.x_spacing/2.0)+self.x_spacing*x), int(self.spacing + (self.spacing*y))
+    def local_to_pixel(self, label):
+        x, y = label
+        return (int((self.x_spacing/2.0)+self.x_spacing*x), int(self.y_spacing + (self.y_spacing*y)))
 
     def set_active_zone(self, zone):
         # y then x, as this is how the arrays are chunked up
@@ -44,13 +39,13 @@ class Horizontal_slices(object):
         if amount > 0 and amount < self.rows:
             self.y_spacing = int(self.rows / (amount + 1))
             self.x_spacing = (self.cols / self.x)
-            self.spacings = ((self.y_spacing + (self.y_spacing*i)) for i in range(amount))
+            self.spacings = [(self.y_spacing + (self.y_spacing*i)) for i in range(amount)]
         else:
             print "Bad amount passed to scanner"
             if not self.spacings:
                 self.spacings = []
     
-    def parse(self, depth_array):
+    def action(self, depth_array):
         # split array into horizontal lines
         for y_idx in range(len(self.spacings)):
             if y_idx in self.zones.keys():
@@ -58,6 +53,12 @@ class Horizontal_slices(object):
                 for x_idx in sorted(list(self.zones[y_idx])):
                     array = x_arrs[x_idx]
                     yield ((x_idx, y_idx), array)
+
+
+"""
+
+RETIRED PoC code
+
 
 class Horizontal_string(object):
     def __init__(self, config=[4,3], hot_zones=([(x, y) for y in range(3) for x in range(4)]), 
@@ -137,3 +138,5 @@ if __name__ == "__main__":
         cv.ShowImage('Depth', img)
         if cv.WaitKey(10) == 27:
             break
+
+"""

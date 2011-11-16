@@ -2,19 +2,47 @@
 
 import numpy as np
 
-def onedgaussian(arr, mu = None):
-    if mu == None:
-        mu = np.mean(arr)
-    np.subtract(arr, float(mu), arr)
-    arr = np.multiply(arr, arr)
-    sig = np.sum(arr)/float(len(arr))
-    return mu, sig
+class Onedgaussian(object):
+    def __init__(self, config={'fn':'mu_as_min'}):
+        self.config = config
+        self.set_fn()
+    
+    def set_fn(self, fn=None):
+        if fn != None:
+            if hasattr(self, fn):
+                self.config['fn'] = fn
+            else:
+                print "Couldn't find function '%s' in this class" % fn
+                print "Continuing to use %s" % config.get('fn')
+        if hasattr(self, self.config.get('fn', 'mu_as_min')):
+            self.fn = self.__getattribute__(self.config.get('fn', 'mu_as_min'))
+        
+    def normal(self, arr, mu = None):
+        if mu == None:
+            mu = np.mean(arr)
+        np.subtract(arr, float(mu), arr)
+        arr = np.multiply(arr, arr)
+        sig = np.sum(arr)/float(len(arr))
+        return {'mu':mu, 'sig':sig}
 
-def onedgaussian_trigger(arr, mu = None, trigger_sig=10000):
-    m,s = onedgaussian(arr, mu)
-    return m,s, s>trigger_sig
+    def mu_as_min(self, arr):
+        mu = np.min(arr)
+        return self.normal(arr, mu)
+
+    def mu_as_max(self, arr):
+        mu = np.max(arr)
+        return self.normal(arr, mu)
 
 if __name__ == "__main__":
     import numpy as np
+    print "Using 'a = np.arange(100)' as the array to work on"
     a = np.arange(100)
-    print onedgaussian(a)
+    print "Default 'mu as min':"
+    og = Onedgaussian()
+    print og.fn(a)
+    print "Normal:"
+    og.set_fn("normal")
+    print og.fn(a)
+    print "Mu as Max:"
+    og.set_fn("mu_as_max")
+    print og.fn(a)

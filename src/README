@@ -23,9 +23,9 @@ Pass to Orchestrator - components:
 
 Library paths:
     Slicers in 'slicer.XXXX'
-    Parsers in 'parsers.XXXX'
-    Mappers in 'mappers.XXXX'
+    Parsers in 'parser.XXXX'
+    Mappers in 'mapper.XXXX'
     Viz in 'viz.XXXX'
-    Output in 'Outputs.XXXX'
+    Output in 'output.XXXX'
     
 Orchestrator configuration uses Class names to load components
