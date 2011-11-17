@@ -68,6 +68,106 @@ Library paths:
  - Output in 'output.XXXX'
  - Configuration presets in 'presets/XXXX'
     
-Orchestrator configuration uses Class names to load components, see the default.json file for more information.
+Orchestrator configuration uses Class names to load components, see the default.json file for more information:
 
+default.json:
+-------------
 
+(re-ordered and split up to emphasise order of processing)
+
+    {
+     "orchestrator": {
+      "fliplr": true,
+      "input": "fake"
+     },
+     ...
+
+(NB "..." denotes a split made here that isn't in the actual file)
+
+Orchestrator itself has a few options
+ - "fliplr" (true/false) - reflects the image about the vertical axis. This makes the kinect data look like a 'mirror' and is more
+ comfortable to see and interact with.
+ - "input" ("fake") - optional. when set to 'fake', the frames are randomly generated. It will use the kinect data otherwise. 
+     
+     ...
+     "slicer": [
+      {
+       "config": {
+        "y": 3, 
+        "x": 5, 
+        "zones": [
+         [ 0,0], [ 1,0], [ 2,0], [ 3,0], [ 4,0], 
+         [ 0,1], [ 1,1], [ 2,1], [ 3,1], [ 4,1], 
+         [ 0,2], [ 1,2], [ 2,2], [ 3,2], [ 4,2]
+        ], 
+        "res": [640, 480]
+       }, 
+       "module": "virtualstrings", 
+       "cls": "Horizontal_slices"
+      }
+     ], 
+     ...
+
+Each of the 5 levels follow the same form. Level name as a key, with a list of configurations as its value.
+
+Each configuration will set up a single plugin, and requires a module name ('module'), a class to load within that module ('cls') 
+and a configuration to initialise it with ('config'). The configurations tend to be highly plugin specific, but all other levels aside
+from the slicers generally have a 'fn' variable to specify which method to use within the class to use.
+
+The first slicer to work on the data also has the power of giving a local label to the bit it slices out, which stays with that segment
+for the life of that slice. With great power, comes great responsibility and so the first slicer class must include a method called
+'local_to_pixel' which will translate this label into a pixel value, to aid the Viz plugin later on.
+
+     ...
+     "parser": [
+      {
+       "config": {
+        "fn": "mu_as_min"
+       }, 
+       "module": "gaussian", 
+       "cls": "Onedgaussian"
+      }
+     ], 
+     "mapper": [
+      {
+       "config": {
+        "variable": "sig", 
+        "limit": 10000, 
+        "fn": "simple_gt"
+       }, 
+       "module": "trigger", 
+       "cls": "Trigger"
+      }
+     ],  
+     ...
+
+The parser and mapper together represents the 'perception/decision' part of the workflow. They are separate so that the
+parser can be made stateless, even if state is required to collate all the outputs to make a decision upon in the mapper.
+
+     ...
+     "viz": [
+      {
+       "config": {
+        "fn": "binary_circles"
+       }, 
+       "module": "grid", 
+       "cls": "Grid"
+      }
+     ], 
+     
+This plugin level is only called once per frame, and is given the original depth array as well as the outputs from the mappers.
+
+     "output": [
+      {
+       "config": {
+        "device": 0, 
+        "fn": "basic_grid"
+       }, 
+       "module": "midi", 
+       "cls": "Drums"
+      }
+     ]
+    }
+
+This plugin is called for each array passing through the workflow, and is meant for incremental outputs, such as sending 
+UDP packets or MIDI signals.
