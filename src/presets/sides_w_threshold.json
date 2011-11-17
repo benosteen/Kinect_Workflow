@@ -1,0 +1,73 @@
+{
+ "mapper": [
+  {
+   "config": {
+    "variable": "sig", 
+    "limit": 13000, 
+    "fn": "simple_gt"
+   }, 
+   "module": "trigger", 
+   "cls": "Trigger"
+  }
+ ], 
+ "orchestrator": {
+  "__input": "fake",
+  "fliplr": true
+ }, 
+ "slicer": [
+  {
+   "config": {
+    "y": 4, 
+    "x": 5, 
+    "zones": [
+     [ 0,0], [ 4,0], 
+     [ 0,1], [ 4,1], 
+     [ 0,2], [ 4,2],
+     [ 0,3], [ 4,3]
+    ], 
+    "res": [640, 480]
+   }, 
+   "module": "virtualstrings", 
+   "cls": "Horizontal_slices"
+  },
+  {
+   "config": {
+        "fn":"threshold",
+        "min":300,
+        "range":500
+   }, 
+   "module": "simple_filters", 
+   "cls": "Filter"
+  }
+ ], 
+ "parser": [
+  {
+   "config": {
+    "fn": "mu_as_min"
+   }, 
+   "module": "gaussian", 
+   "cls": "Onedgaussian"
+  }
+ ], 
+ "viz": [
+  {
+   "config": {
+    "fn": "binary_circles",
+    "threshold": {"min":300,
+                  "range":500}
+   }, 
+   "module": "grid", 
+   "cls": "Grid"
+  }
+ ], 
+ "output": [
+  {
+   "config": {
+    "device": 0, 
+    "fn": "basic_grid"
+   }, 
+   "module": "midi", 
+   "cls": "Drums"
+  }
+ ]
+}
