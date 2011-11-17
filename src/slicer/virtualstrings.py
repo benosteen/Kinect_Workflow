@@ -45,8 +45,9 @@ class Horizontal_slices(object):
             if not self.spacings:
                 self.spacings = []
     
-    def action(self, depth_array):
+    def fn(self, depth_array, label=None):
         # split array into horizontal lines
+        # Ignoring label as this is often an originator of the slices
         for y_idx in range(len(self.spacings)):
             if y_idx in self.zones.keys():
                 x_arrs = np.array_split(depth_array[int(self.y_spacing+y_idx*self.y_spacing)], self.x)

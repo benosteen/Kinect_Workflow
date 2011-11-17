@@ -23,7 +23,7 @@ class Onedgaussian(object):
         np.subtract(arr, float(mu), arr)
         arr = np.multiply(arr, arr)
         sig = np.sum(arr)/float(len(arr))
-        return {'mu':mu, 'sig':sig}
+        return {'main':sig, 'mu':mu, 'sig':sig}
 
     def mu_as_min(self, arr):
         mu = np.min(arr)
