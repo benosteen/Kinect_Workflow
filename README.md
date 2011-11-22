@@ -142,7 +142,7 @@ for the life of that slice. With great power, comes great responsibility and so 
      ...
 
 The parser and mapper together represents the 'perception/decision' part of the workflow. They are separate so that the
-parser can be made stateless, even if state is required to collate all the outputs to make a decision upon in the mapper.
+parser can be made stateless, even if state is required to collate all the outputs to make a decision upon in the mapper.q
 
      ...
      "viz": [

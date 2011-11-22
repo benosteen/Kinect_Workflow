@@ -27,6 +27,15 @@
    }, 
    "module": "virtualstrings", 
    "cls": "Horizontal_slices"
+  },
+  {
+   "config": {
+        "fn":"threshold",
+        "min":300,
+        "range":500
+   }, 
+   "module": "simple_filters", 
+   "cls": "Filter"
   }
  ], 
  "parser": [
@@ -41,7 +50,9 @@
  "viz": [
   {
    "config": {
-    "fn": "binary_circles"
+    "fn": "binary_circles",
+    "threshold": {"min":300,
+                  "range":500}
    }, 
    "module": "grid", 
    "cls": "Grid"
@@ -50,7 +61,7 @@
  "output": [
   {
    "config": {
-    "device": 0, 
+    "device": 2, 
     "fn": "basic_grid"
    }, 
    "module": "midi", 
