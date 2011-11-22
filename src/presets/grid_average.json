@@ -1,0 +1,61 @@
+{
+ "mapper": [
+  {
+   "config": {
+    "variable": "main", 
+    "limit": 800, 
+    "fn": "simple_lt"
+   }, 
+   "module": "trigger", 
+   "cls": "Trigger"
+  }
+ ], 
+ "orchestrator": {
+  "fliplr": true
+ }, 
+ "slicer": [
+  {
+   "config": {
+    "y": 11, 
+    "x": 11, 
+    "zones": [
+     [ 1,1], [ 3,1], [ 5,1], [ 7,1], [ 9,1], 
+     [ 1,3], [ 3,3], [ 5,3], [ 7,3], [ 9,3], 
+     [ 1,5], [ 3,5], [ 5,5], [ 7,5], [ 9,5], 
+     [ 1,7], [ 3,7], [ 5,7], [ 7,7], [ 9,7] 
+    ], 
+    "res": [640, 480]
+   }, 
+   "module": "virtualgrid", 
+   "cls": "Grid"
+  }
+ ], 
+ "parser": [
+  {
+   "config": {
+    "fn": "mean"
+   }, 
+   "module": "simple", 
+   "cls": "Simple"
+  }
+ ], 
+ "viz": [
+  {
+   "config": {
+    "fn": "square_areas"
+   }, 
+   "module": "grid", 
+   "cls": "Grid"
+  }
+ ], 
+ "output": [
+  {
+   "config": {
+    "device": 2, 
+    "fn": "basic_grid"
+   }, 
+   "module": "midi", 
+   "cls": "Drums"
+  }
+ ]
+}

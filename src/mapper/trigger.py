@@ -25,3 +25,8 @@ class Trigger(object):
         if self.varname in values.keys():
             return values[self.varname] > self.config['limit']
 
+    def simple_lt(self, values):
+        # True, False and None for undefined ;)
+        if self.varname in values.keys():
+            return values[self.varname] < self.config['limit']
+

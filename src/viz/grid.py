@@ -43,3 +43,16 @@ class Grid(object):
             x,y = local_to_pixel(state['label'])
             cv.Circle(img, (x,y), state.get(state_size_var, 0), colour)
         return img
+    
+    def square_areas(self, depth_array, states, local_to_pixel,
+                      on_colour = 0x00, off_colour = 0x99, thickness=2):
+        if self.config.get('threshold'):
+            depth_array = np.clip(depth_array, self.config["threshold"].get("min", 200), self.config["threshold"].get("min", 200) + self.config["threshold"].get("range", 300))
+        img = frame_convert.pretty_depth_cv(depth_array)
+        for state in states:
+            x,y,w,h = local_to_pixel(state['label'])
+            if state.get('mapped', False):
+                cv.Rectangle(img, (x,y), (x+w, y+h), on_colour, thickness)
+            else:
+                cv.Rectangle(img, (x,y), (x+w, y+h), off_colour, thickness)
+        return img
