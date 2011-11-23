@@ -116,7 +116,7 @@ class Orchestrator(object):
             # output time
             outputs.append({'label':label, 'mapped':arr})
             for x in self.component['output']:
-                x.fn(label, arr)
+                x.fn(label, arr, config = self.config)
         return [y.fn(depth_array, outputs, self.component['slicer'][0].local_to_pixel) for y in self.component['viz']]  # first slicer labels it, so has responsibility
         
     def save_config(self, filename):

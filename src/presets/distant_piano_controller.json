@@ -20,6 +20,7 @@
     "y": 8, 
     "x": 20, 
     "zones": [
+    [1, 2],
     [0, 5],[1, 5],[2, 5],[3, 5],[4, 5],[5, 5],[6, 5],[7, 5],[8, 5],[9, 5],
     [10, 5],[11, 5],[12, 5],[13, 5],[14, 5],[15, 5],[16, 5],[17, 5],[18, 5],[19, 5]
     ], 
@@ -51,11 +52,23 @@
   {
    "config": {
     "device": 2, 
-    "fn": "basic_grid",
-    "scale": "CMAJOR"
+    "fn": "basic_grid_multiple_scales",
+    "scale_index": 0,
+    "transpose": 12,
+    "y": [5]
    }, 
    "module": "midi", 
    "cls": "Scales"
+  },
+  {
+    "config": {"fn": "inc",
+               "labels": [[1,2]],
+               "component": "output",
+               "component_index": 0,
+               "config_variable": "scale_index",
+               "amount": 1},
+    "module": "control",
+    "cls": "Controller"
   }
  ]
 }

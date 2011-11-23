@@ -52,7 +52,8 @@
    "config": {
     "device": 2, 
     "fn": "basic_grid",
-    "scale": "CMAJOR"
+    "scale": "THIRDS",
+    "transpose": 24
    }, 
    "module": "midi", 
    "cls": "Scales"

@@ -52,7 +52,7 @@
    "config": {
     "device": 2, 
     "fn": "basic_grid",
-    "scale": "CMAJOR"
+    "scale": "JAZZY"
    }, 
    "module": "midi", 
    "cls": "Scales"

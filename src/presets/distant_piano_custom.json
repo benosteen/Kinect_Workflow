@@ -51,8 +51,8 @@
   {
    "config": {
     "device": 2, 
-    "fn": "basic_grid",
-    "scale": "CMAJOR"
+    "fn": "basic_grid_custom_scale",
+    "scalenotes": [0,1,2,3,7,8,9,11]
    }, 
    "module": "midi", 
    "cls": "Scales"
