@@ -23,10 +23,15 @@ class Trigger(object):
     def simple_gt(self, values):
         # True, False and None for undefined ;)
         if self.varname in values.keys():
-            return values[self.varname] > self.config['limit']
+            return {'trigger': values[self.varname] > self.config['limit']}
 
     def simple_lt(self, values):
         # True, False and None for undefined ;)
         if self.varname in values.keys():
-            return values[self.varname] < self.config['limit']
+            return {'trigger': values[self.varname] < self.config['limit']}
+        
+    def simple_range(self, values):
+        # True, False and None for undefined ;)
+        if self.varname in values.keys():
+            return {'trigger': values[self.varname] < self.config['max'] and values[self.varname] > self.config['min']}
 

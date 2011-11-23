@@ -30,10 +30,10 @@ class Drums(object):
         if drums_no not in self.drumstates.keys():
             self.drumstates[drums_no] = 0
 
-        if self.drumstates[drums_no] and not value:
+        if self.drumstates[drums_no] and not value.get('trigger', False):
             self.o.note_off(drums_no)
             self.drumstates[drums_no] = 0
-        if value:
+        if value.get('trigger', False):
             if self.drumstates[drums_no] != 1:
                 self.drumstates[drums_no] = 1
                 self.o.note_on(drums_no, 120)
