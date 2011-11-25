@@ -53,7 +53,8 @@
     "fn": "basic_grid_multiple_scales",
     "scale_index": 0,
     "grid_width": 20,
-    "transpose": 0
+    "transpose": 0,
+    "wrap": 88
    }, 
    "module": "midi", 
    "cls": "Scales"
