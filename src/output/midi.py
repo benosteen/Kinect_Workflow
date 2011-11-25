@@ -114,7 +114,9 @@ class Drums(object):
         
     def basic_grid(self, label, value, config=None):
         x,y = label
-        drums_no = self.basenote+(x + y*self.config.get('grid_width', 5))
+        if self.config.get("y") != None and y not in self.config.get("y"):
+            return
+        drums_no = int(self.config.get("drums_start", self.basenote)+(x*self.config.get("step", 1) + y*self.config.get('grid_width', 5)))
         if drums_no not in self.drumstates.keys():
             self.drumstates[drums_no] = 0
 

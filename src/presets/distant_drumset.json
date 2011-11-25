@@ -3,8 +3,8 @@
   {
    "config": {
     "variable": "main", 
-    "min": 600, 
-    "max": 750, 
+    "min": 500, 
+    "max": 650, 
     "fn": "simple_range"
    }, 
    "module": "trigger", 
@@ -20,9 +20,8 @@
     "y": 8, 
     "x": 20, 
     "zones": [
-    [1, 1],
-    [0, 3],[1, 3],[2, 3],[3, 3],[4, 3],[5, 3],[6, 3],[7, 3],[8, 3],[9, 3],
-    [10, 3],[11, 3],[12, 3],[13, 3],[14, 3],[15, 3],[16, 3],[17, 3],[18, 3],[19, 3]
+    [0, 3],[2, 3],[4, 3],[6, 3],[8, 3],
+    [10, 3],[12, 3],[14, 3],[16, 3],[18, 3]
     ], 
     "res": [640, 480]
    }, 
@@ -52,23 +51,14 @@
   {
    "config": {
     "device": 0, 
-    "fn": "basic_grid_multiple_scales",
-    "scale_index": 0,
-    "transpose": 12,
-    "y": [3]
+    "fn": "basic_grid",
+    "drums_start": 35,
+    "grid_width": 0,
+    "y": [3],
+    "step": 0.5
    }, 
    "module": "midi", 
-   "cls": "Scales"
-  },
-  {
-    "config": {"fn": "inc",
-               "labels": [[1,1]],
-               "component": "output",
-               "component_index": 0,
-               "config_variable": "scale_index",
-               "amount": 1},
-    "module": "control",
-    "cls": "Controller"
+   "cls": "Drums"
   }
  ]
 }

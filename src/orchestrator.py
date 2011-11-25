@@ -109,10 +109,10 @@ class Orchestrator(object):
                     label, arr = x.fn(arr, label=label)
             # parser steps
             for x in self.component['parser']:
-                arr = x.fn(arr)
+                arr = x.fn(label, arr)
             # mapper steps
             for x in self.component['mapper']:
-                arr = x.fn(arr)
+                arr = x.fn(label, arr)
             # output time
             outputs.append({'label':label, 'mapped':arr})
             for x in self.component['output']:

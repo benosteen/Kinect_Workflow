@@ -17,7 +17,7 @@ class Onedgaussian(object):
         if hasattr(self, self.config.get('fn', 'mu_as_min')):
             self.fn = self.__getattribute__(self.config.get('fn', 'mu_as_min'))
         
-    def normal(self, arr, mu = None):
+    def normal(self, label, arr, mu = None):
         if mu == None:
             mu = np.mean(arr)
         np.subtract(arr, float(mu), arr)
@@ -25,13 +25,13 @@ class Onedgaussian(object):
         sig = np.sum(arr)/float(len(arr))
         return {'main':sig, 'mu':mu, 'sig':sig}
 
-    def mu_as_min(self, arr):
+    def mu_as_min(self, label, arr):
         mu = np.min(arr)
-        return self.normal(arr, mu)
+        return self.normal(label, arr, mu)
 
-    def mu_as_max(self, arr):
+    def mu_as_max(self, label, arr):
         mu = np.max(arr)
-        return self.normal(arr, mu)
+        return self.normal(label, arr, mu)
 
 if __name__ == "__main__":
     import numpy as np

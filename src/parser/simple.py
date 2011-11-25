@@ -17,13 +17,13 @@ class Simple(object):
         if hasattr(self, self.config.get('fn', 'mu_as_min')):
             self.fn = self.__getattribute__(self.config.get('fn', 'mean'))
     
-    def mean(self, array):
+    def mean(self, label, array):
         m = np.mean(array)
         return {'main':m, 'mean':m}
-    def maxi(self, array):
+    def maxi(self, label, array):
         m = np.max(array)
         return {'main':m, 'maxi':m}
-    def mini(self, array):
+    def mini(self, label, array):
         m = np.min(array)
         return {'main':m, 'mini':m}
 
