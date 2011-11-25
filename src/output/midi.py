@@ -45,6 +45,8 @@ class Scales(object):
         note_idx = self.basenote+(x + y*self.config.get('grid_width', 5))
         scale =  SCALES.get(self.config.get('scale', 'CMAJOR'), SCALES['CMAJOR'])
         note = 12 * (note_idx / len(scale)) + (scale[note_idx % len(scale)]) + self.config.get('transpose', 0)
+        if self.config.get("wrap"):
+            note = note % self.config["wrap"]
         if note_idx not in self.keystates.keys():
             self.keystates[note_idx] = 0
 
@@ -64,6 +66,8 @@ class Scales(object):
         self.config['scale_index'] = self.config.get('scale_index', 0) % len(SCALESLIST)
         scale =  SCALES.get(SCALESLIST[self.config.get('scale_index', 0) ] )
         note = 12 * (note_idx / len(scale)) + (scale[note_idx % len(scale)]) + self.config.get('transpose', 0)
+        if self.config.get("wrap"):
+            note = note % self.config["wrap"]
         if note_idx not in self.keystates.keys():
             self.keystates[note_idx] = 0
 
@@ -82,6 +86,8 @@ class Scales(object):
         note_idx = self.basenote+(x + y*self.config.get('grid_width', 5))
         scale =  self.config.get('scalenotes', SCALES['CMAJOR'])
         note = 12 * (note_idx / len(scale)) + (scale[note_idx % len(scale)]) + self.config.get('transpose', 0)
+        if self.config.get("wrap"):
+            note = note % self.config["wrap"]
         if note_idx not in self.keystates.keys():
             self.keystates[note_idx] = 0
 
@@ -117,6 +123,8 @@ class Drums(object):
         if self.config.get("y") != None and y not in self.config.get("y"):
             return
         drums_no = int(self.config.get("drums_start", self.basenote)+(x*self.config.get("step", 1) + y*self.config.get('grid_width', 5)))
+        if self.config.get("wrap"):
+            drums_no = drums_no % self.config["wrap"]
         if drums_no not in self.drumstates.keys():
             self.drumstates[drums_no] = 0
 
